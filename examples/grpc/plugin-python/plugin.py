@@ -14,14 +14,14 @@ class KVServicer(kv_pb2_grpc.KVServicer):
     """Implementation of KV service."""
 
     def Get(self, request, context):
-        filename = "kv_"+request.key
+        filename = f"kv_{request.key}"
         with open(filename, 'r+b') as f:
             result = kv_pb2.GetResponse()
             result.value = f.read()
             return result
 
     def Put(self, request, context):
-        filename = "kv_"+request.key
+        filename = f"kv_{request.key}"
         value = "{0}\n\nWritten from plugin-python".format(request.value)
         with open(filename, 'w') as f:
             f.write(value)
